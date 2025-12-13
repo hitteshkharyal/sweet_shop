@@ -61,3 +61,24 @@ describe("Sweets - Search", () => {
     expect(res.body.length).toBeGreaterThan(0);
   });
 });
+describe("Sweets - Update", () => {
+  it("should update sweet details", async () => {
+    const sweet = await request(app)
+      .post("/api/sweets")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Ladoo",
+        category: "Indian",
+        price: 5,
+        quantity: 20
+      });
+
+    const res = await request(app)
+      .put(`/api/sweets/${sweet.body._id}`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ price: 8 });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.price).toBe(8);
+  });
+});
