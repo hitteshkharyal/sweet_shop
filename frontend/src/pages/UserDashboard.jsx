@@ -140,6 +140,16 @@ export default function UserDashboard() {
     } finally {
       setLoading(false);
     }
+    await createOrder({
+  items: cart.map(i => ({
+    sweetId: i._id,
+    name: i.name,
+    qty: i.qty,
+    price: i.price
+  })),
+  totalAmount: total
+});
+
   };
 
   return (

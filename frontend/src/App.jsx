@@ -11,6 +11,10 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminRoute from "./routes/AdminRoute";
 
+import UserProfile from "./pages/UserProfile";
+import AdminProfile from "./pages/AdminProfile";
+
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -47,6 +51,26 @@ export default function App() {
                 </AdminRoute>
               }
             />
+
+              <Route
+  path="/profile"
+  element={
+    <ProtectedRoute>
+      <UserProfile />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="/admin/profile"
+  element={
+    <AdminRoute>
+      <AdminProfile />
+    </AdminRoute>
+  }
+/>
+
+
           </Routes>
         </div>
 

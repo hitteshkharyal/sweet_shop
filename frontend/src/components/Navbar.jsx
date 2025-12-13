@@ -6,24 +6,44 @@ export default function Navbar() {
   return (
     <AppBar sx={{ background: "linear-gradient(90deg,#d32f2f,#f57c00)" }}>
       <Toolbar>
-        <Typography component={Link} to="/" sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}>
+        <Typography
+          component={Link}
+          to="/"
+          sx={{
+            flexGrow: 1,
+            color: "white",
+            textDecoration: "none",
+            fontWeight: "bold"
+          }}
+        >
           Sweet Shop
         </Typography>
 
         {!auth.isLoggedIn() ? (
           <>
-            <Button color="inherit" component={Link} to="/login">Login</Button>
-            <Button color="inherit" component={Link} to="/register">Register</Button>
+            <Button color="inherit" component={Link} to="/login">
+              Login
+            </Button>
+            <Button color="inherit" component={Link} to="/register">
+              Register
+            </Button>
           </>
         ) : (
           <>
-            <Button color="inherit" component={Link} to={auth.isAdmin() ? "/admin" : "/user"}>
-              Dashboard
+            <Button
+              color="inherit"
+              component={Link}
+              to={auth.isAdmin() ? "/admin/profile" : "/profile"}
+            >
+              Profile
             </Button>
-            <Button color="inherit" onClick={() => {
-              auth.logout();
-              window.location.href = "/";
-            }}>
+            <Button
+              color="inherit"
+              onClick={() => {
+                auth.logout();
+                window.location.href = "/";
+              }}
+            >
               Logout
             </Button>
           </>
