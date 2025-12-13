@@ -7,6 +7,7 @@ import { theme } from "./theme/theme.js";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <ThemeProvider theme={theme}>
+    {/* <CssBaseline /> */}
     <App />
   </ThemeProvider>
 );

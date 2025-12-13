@@ -2,9 +2,16 @@ import { Box, Typography } from "@mui/material";
 
 export default function Footer() {
   return (
-    <Box sx={{ mt: 1, py: 2, background: "#212121", color: "white", textAlign: "center" }}>
+    <Box
+      sx={{
+        mt: "auto",
+        py: 2,
+        textAlign: "center",
+        background: "#f5f5f5"
+      }}
+    >
       <Typography variant="body2">
-        © 2025 Sweet Shop Management System
+        © {new Date().getFullYear()} Sweet Shop
       </Typography>
     </Box>
   );
