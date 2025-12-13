@@ -38,3 +38,35 @@ exports.deleteSweet = async (req, res) => {
   await Sweet.findByIdAndDelete(req.params.id);
   res.json({ message: "Sweet deleted" });
 };
+exports.purchaseSweet = async (req, res) => {
+  const sweet = await Sweet.findById(req.params.id);
+  if (sweet.quantity < req.body.qty) {
+    return res.status(400).json({ message: "Out of stock" });
+  }
+
+  sweet.quantity -= req.body.qty;
+  await sweet.save();
+  res.json(sweet);
+};
+
+exports.restockSweet = async (req, res) => {
+  const sweet = await Sweet.findById(req.params.id);
+  sweet.quantity += req.body.qty;
+  await sweet.save();
+  res.json(sweet);
+};
+exports.purchaseSweet = async (req, res) => {
+  const sweet = await Sweet.findById(req.params.id);
+  if (!sweet) {
+    return res.status(404).json({ message: "Sweet not found" });
+  }
+
+  if (sweet.quantity < req.body.qty) {
+    return res.status(400).json({ message: "Out of stock" });
+  }
+
+  sweet.quantity -= req.body.qty;
+  await sweet.save();
+
+  res.json(sweet);
+};
