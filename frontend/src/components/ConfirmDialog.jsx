@@ -5,10 +5,10 @@ import {
   Button
 } from "@mui/material";
 
-export default function ConfirmDialog({ open, title, onConfirm, onClose }) {
+export default function ConfirmDialog({ open, onClose, onConfirm, text }) {
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>{title}</DialogTitle>
+      <DialogTitle>{text}</DialogTitle>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
         <Button color="error" onClick={onConfirm}>

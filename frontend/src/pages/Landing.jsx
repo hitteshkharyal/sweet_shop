@@ -1,20 +1,20 @@
-import { Box, Button, Typography, Stack } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 export default function Landing() {
   return (
     <Box
       sx={{
-        height: "100vh",
-        background: "linear-gradient(135deg, #E53935, #FB8C00)",
+        height: "90vh",
+        background: "linear-gradient(135deg,#d32f2f,#f57c00)",
         display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
+        alignItems: "center"
       }}
     >
       <Stack spacing={3} alignItems="center">
         <Typography variant="h3" color="white" fontWeight="bold">
-          Sweet Shop
+          Sweet Shop 🍬
         </Typography>
 
         <Typography color="white">
@@ -22,14 +22,17 @@ export default function Landing() {
         </Typography>
 
         <Stack direction="row" spacing={2}>
-          <Button component={Link} to="/login" variant="contained">
-             Login
+          <Button variant="contained" component={Link} to="/login">
+            Login
           </Button>
-          <Button component={Link} to="/register" variant="Contained">
+          <Button variant="outlined" component={Link} to="/register">
             Register
           </Button>
-
         </Stack>
+
+        <Typography color="white" fontSize={13}>
+          Admin Login → admin@sweetshop.com / admin123
+        </Typography>
       </Stack>
     </Box>
   );

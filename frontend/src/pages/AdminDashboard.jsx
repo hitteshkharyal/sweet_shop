@@ -1,26 +1,18 @@
 import { useEffect, useState } from "react";
-import {
-  getAllSweets,
-  addSweet,
-  updateSweet,
-  deleteSweet,
-  restockSweet
-} from "../api/adminSweets";
-
-import AdminSweetCard from "../components/AdminSweetCard";
-import SweetFormDialog from "../components/SweetFormDialog";
-import ConfirmDialog from "../components/ConfirmDialog";
-
-import { Grid, Button, Typography } from "@mui/material";
+import { getSweets } from "../api/sweets";
+import SweetTable from "../components/SweetTable";
+import SweetForm from "../components/SweetForm";
+import RestockDialog from "../components/RestockDialog";
+import { Box, Button, Typography } from "@mui/material";
 
 export default function AdminDashboard() {
   const [sweets, setSweets] = useState([]);
-  const [formOpen, setFormOpen] = useState(false);
-  const [selected, setSelected] = useState(null);
-  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [openForm, setOpenForm] = useState(false);
+  const [openRestock, setOpenRestock] = useState(false);
+  const [selectedSweet, setSelectedSweet] = useState(null);
 
   const load = async () => {
-    const res = await getAllSweets();
+    const res = await getSweets();
     setSweets(res.data);
   };
 
@@ -28,81 +20,49 @@ export default function AdminDashboard() {
     load();
   }, []);
 
-  const saveSweet = async data => {
-    if (selected) {
-      await updateSweet(selected._id, data);
-    } else {
-      await addSweet(data);
-    }
-    setFormOpen(false);
-    setSelected(null);
-    load();
-  };
-
-  const confirmDelete = async () => {
-    await deleteSweet(selected._id);
-    setConfirmOpen(false);
-    setSelected(null);
-    load();
-  };
-
-  const restock = async sweet => {
-    const qty = prompt("Enter restock quantity:");
-    if (qty > 0) {
-      await restockSweet(sweet._id, Number(qty));
-      load();
-    }
-  };
-
   return (
-    <>
-      <Typography variant="h4" mb={3}>
-        Admin Dashboard
-      </Typography>
+    <Box sx={{ p: 3 }}>
+      <Typography variant="h4">Admin Dashboard</Typography>
 
       <Button
+        sx={{ my: 2 }}
         variant="contained"
-        sx={{ mb: 3 }}
-        onClick={() => setFormOpen(true)}
+        onClick={() => {
+          setSelectedSweet(null);
+          setOpenForm(true);
+        }}
       >
-        Add Sweet
+        + Add Sweet
       </Button>
 
-      <Grid container spacing={2}>
-        {sweets.map(s => (
-          <Grid item xs={12} md={4} key={s._id}>
-            <AdminSweetCard
-              sweet={s}
-              onEdit={sweet => {
-                setSelected(sweet);
-                setFormOpen(true);
-              }}
-              onDelete={sweet => {
-                setSelected(sweet);
-                setConfirmOpen(true);
-              }}
-              onRestock={restock}
-            />
-          </Grid>
-        ))}
-      </Grid>
-
-      <SweetFormDialog
-        open={formOpen}
-        initial={selected}
-        onClose={() => {
-          setFormOpen(false);
-          setSelected(null);
+      <SweetTable
+        sweets={sweets}
+        onEdit={sweet => {
+          setSelectedSweet(sweet);
+          setOpenForm(true);
         }}
-        onSave={saveSweet}
+        onRestock={sweet => {
+          setSelectedSweet(sweet);
+          setOpenRestock(true);
+        }}
+        onRefresh={load}
       />
 
-      <ConfirmDialog
-        open={confirmOpen}
-        title="Delete this sweet?"
-        onClose={() => setConfirmOpen(false)}
-        onConfirm={confirmDelete}
-      />
-    </>
+      {openForm && (
+        <SweetForm
+          sweet={selectedSweet}
+          onClose={() => setOpenForm(false)}
+          onSuccess={load}
+        />
+      )}
+
+      {openRestock && selectedSweet && (
+        <RestockDialog
+          sweet={selectedSweet}
+          onClose={() => setOpenRestock(false)}
+          onSuccess={load}
+        />
+      )}
+    </Box>
   );
 }

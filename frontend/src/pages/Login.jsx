@@ -18,16 +18,12 @@ export default function Login() {
   const submit = async () => {
     try {
       const res = await login(form);
-
-      if (res.data.role !== role) {
-        setError("Role mismatch. Please select correct role.");
-        return;
-      }
-
       auth.login(res.data.token, res.data.role);
-      window.location.href = role === "admin" ? "/admin" : "/user";
+
+      window.location.href =
+        res.data.role === "admin" ? "/admin" : "/user";
     } catch {
-      setError("Invalid credentials");
+      setError("Invalid email or password");
     }
   };
 
@@ -41,7 +37,7 @@ export default function Login() {
         fullWidth
         value={role}
         exclusive
-        onChange={(_, val) => val && setRole(val)}
+        onChange={(_, v) => v && setRole(v)}
         sx={{ mb: 2 }}
       >
         <ToggleButton value="user">User</ToggleButton>
@@ -62,20 +58,11 @@ export default function Login() {
         onChange={e => setForm({ ...form, password: e.target.value })}
       />
 
-      {error && (
-        <Typography color="error" mt={1}>
-          {error}
-        </Typography>
-      )}
+      {error && <Typography color="error">{error}</Typography>}
 
       <Button fullWidth variant="contained" sx={{ mt: 2 }} onClick={submit}>
         Login
       </Button>
-      
-    <Typography margin="2px" color="white" bgcolor="black" align="center" fontSize={14}>
-  Admin Login → admin@sweetshop.com / admin123
-</Typography>
-
     </Box>
   );
 }

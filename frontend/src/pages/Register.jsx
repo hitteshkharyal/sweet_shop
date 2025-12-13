@@ -8,15 +8,13 @@ export default function Register() {
 
   const submit = async () => {
     await register(form);
-    setSuccess("Registration successful! Please login.");
+    setSuccess("Registration successful! Redirecting...");
     setTimeout(() => (window.location.href = "/login"), 1500);
   };
 
   return (
     <Box sx={{ maxWidth: 400, mx: "auto", mt: 8 }}>
-      <Typography variant="h5" mb={2}>
-        Register
-      </Typography>
+      <Typography variant="h5">Register</Typography>
 
       <TextField fullWidth label="Name" margin="normal"
         onChange={e => setForm({ ...form, name: e.target.value })}
@@ -28,11 +26,7 @@ export default function Register() {
         onChange={e => setForm({ ...form, password: e.target.value })}
       />
 
-      {success && (
-        <Typography color="success.main" mt={1}>
-          {success}
-        </Typography>
-      )}
+      {success && <Typography color="success.main">{success}</Typography>}
 
       <Button fullWidth variant="contained" sx={{ mt: 2 }} onClick={submit}>
         Register

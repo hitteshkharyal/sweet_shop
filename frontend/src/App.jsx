@@ -15,17 +15,13 @@ import AdminRoute from "./routes/AdminRoute";
 export default function App() {
   return (
     <BrowserRouter>
-      {/* Navbar is ALWAYS visible */}
       <Navbar />
 
-      {/* Main App Routes */}
       <Routes>
-        {/* Public Pages */}
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* User Dashboard */}
         <Route
           path="/user"
           element={
@@ -35,7 +31,6 @@ export default function App() {
           }
         />
 
-        {/* Admin Dashboard */}
         <Route
           path="/admin"
           element={
@@ -46,7 +41,6 @@ export default function App() {
         />
       </Routes>
 
-      {/* Footer is ALWAYS visible */}
       <Footer />
     </BrowserRouter>
   );

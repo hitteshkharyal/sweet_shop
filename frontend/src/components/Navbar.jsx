@@ -4,45 +4,26 @@ import { auth } from "../store/authStore";
 
 export default function Navbar() {
   return (
-    <AppBar position="sticky" sx={{ background: "linear-gradient(90deg,#d32f2f,#f57c00)" }}>
+    <AppBar sx={{ background: "linear-gradient(90deg,#d32f2f,#f57c00)" }}>
       <Toolbar>
-        <Typography
-          variant="h6"
-          sx={{ flexGrow: 1, fontWeight: "bold" }}
-          component={Link}
-          to="/"
-          style={{ textDecoration: "none", color: "white" }}
-        >
-          🍬 Sweet Shop
+        <Typography component={Link} to="/" sx={{ flexGrow: 1, color: "white", textDecoration: "none" }}>
+          Sweet Shop
         </Typography>
 
-        {!auth.isLoggedIn() && (
+        {!auth.isLoggedIn() ? (
           <>
-            <Button color="inherit" component={Link} to="/login">
-              Login
-            </Button>
-            <Button color="inherit" component={Link} to="/register">
-              Register
-            </Button>
+            <Button color="inherit" component={Link} to="/login">Login</Button>
+            <Button color="inherit" component={Link} to="/register">Register</Button>
           </>
-        )}
-
-        {auth.isLoggedIn() && (
+        ) : (
           <>
-            <Button
-              color="inherit"
-              component={Link}
-              to={auth.isAdmin() ? "/admin" : "/user"}
-            >
+            <Button color="inherit" component={Link} to={auth.isAdmin() ? "/admin" : "/user"}>
               Dashboard
             </Button>
-            <Button
-              color="inherit"
-              onClick={() => {
-                auth.logout();
-                window.location.href = "/";
-              }}
-            >
+            <Button color="inherit" onClick={() => {
+              auth.logout();
+              window.location.href = "/";
+            }}>
               Logout
             </Button>
           </>
