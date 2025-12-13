@@ -1,32 +1,53 @@
-import { Box, Typography, Button } from "@mui/material";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
+import Landing from "./pages/Landing";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import UserDashboard from "./pages/UserDashboard";
+import AdminDashboard from "./pages/AdminDashboard";
+
+import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminRoute from "./routes/AdminRoute";
 
 export default function App() {
   return (
-    <Box
-      sx={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        background: "linear-gradient(135deg, #E53935, #FB8C00)"
-      }}
-    >
-      <Typography variant="h3" color="#fff" fontWeight="bold">
-        Sweet Shop
-      </Typography>
+    <BrowserRouter>
+      {/* Navbar is ALWAYS visible */}
+      <Navbar />
 
-      <Typography color="#fff" sx={{ mt: 1, mb: 3 }}>
-        Manage sweets • Track inventory • Boost sales
-      </Typography>
+      {/* Main App Routes */}
+      <Routes>
+        {/* Public Pages */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-      <Button
-        variant="contained"
-        color="secondary"
-        sx={{ borderRadius: "30px", px: 4 }}
-      >
-        Get Started
-      </Button>
-    </Box>
+        {/* User Dashboard */}
+        <Route
+          path="/user"
+          element={
+            <ProtectedRoute>
+              <UserDashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Admin Dashboard */}
+        <Route
+          path="/admin"
+          element={
+            <AdminRoute>
+              <AdminDashboard />
+            </AdminRoute>
+          }
+        />
+      </Routes>
+
+      {/* Footer is ALWAYS visible */}
+      <Footer />
+    </BrowserRouter>
   );
 }
