@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  baseURL: "https://sweet-shop-backend-0at8.onrender.com",
+  baseURL: "https://sweet-shop-backend-0at8.onrender.com/api",
   headers: {
     "Content-Type": "application/json"
   }
