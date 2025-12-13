@@ -35,3 +35,19 @@ describe("Sweets - Protected Routes", () => {
     expect(res.statusCode).toBe(401);
   });
 });
+describe("Sweets - Create", () => {
+  it("should create a sweet", async () => {
+    const res = await request(app)
+      .post("/api/sweets")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Gulab Jamun",
+        category: "Indian",
+        price: 10,
+        quantity: 50
+      });
+
+    expect(res.statusCode).toBe(201);
+    expect(res.body.name).toBe("Gulab Jamun");
+  });
+});
