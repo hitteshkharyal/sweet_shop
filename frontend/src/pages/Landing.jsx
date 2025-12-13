@@ -19,20 +19,22 @@ export default function Landing() {
 
         <Typography color="white">
           Manage & purchase sweets easily
+
         </Typography>
 
         <Stack direction="row" spacing={2}>
-          <Button variant="contained" component={Link} to="/login">
+          <Button variant="contained" font="bold" component={Link} to="/login">
             Login
           </Button>
-          <Button variant="outlined" component={Link} to="/register">
+          <Button variant="contained" component={Link} to="/register">
             Register
           </Button>
         </Stack>
 
-        <Typography color="white" fontSize={13}>
-          Admin Login → admin@sweetshop.com / admin123
+        <Typography color="white">
+          The Sweet Solution for the Sweets
         </Typography>
+
       </Stack>
     </Box>
   );
