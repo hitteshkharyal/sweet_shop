@@ -82,3 +82,66 @@ describe("Sweets - Update", () => {
     expect(res.body.price).toBe(8);
   });
 });
+let adminToken;
+
+beforeAll(async () => {
+  await request(app).post("/api/auth/register").send({
+    name: "Admin",
+    email: "admin@test.com",
+    password: "admin123"
+  });
+
+  await User.findOneAndUpdate(
+    { email: "admin@test.com" },
+    { role: "admin" }
+  );
+
+  const res = await request(app).post("/api/auth/login").send({
+    email: "admin@test.com",
+    password: "admin123"
+  });
+
+  adminToken = res.body.token;
+});
+
+describe("Sweets - Delete (Admin)", () => {
+  it("should delete sweet if admin", async () => {
+    const sweet = await request(app)
+      .post("/api/sweets")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Barfi",
+        category: "Indian",
+        price: 12,
+        quantity: 10
+      });
+
+    const res = await request(app)
+      .delete(`/api/sweets/${sweet.body._id}`)
+      .set("Authorization", `Bearer ${adminToken}`);
+
+    expect(res.statusCode).toBe(200);
+  });
+});
+
+
+describe("Inventory - Purchase", () => {
+  it("should reduce quantity when purchased", async () => {
+    const sweet = await request(app)
+      .post("/api/sweets")
+      .set("Authorization", `Bearer ${token}`)
+      .send({
+        name: "Peda",
+        category: "Indian",
+        price: 15,
+        quantity: 5
+      });
+
+    const res = await request(app)
+      .post(`/api/sweets/${sweet.body._id}/purchase`)
+      .set("Authorization", `Bearer ${token}`)
+      .send({ qty: 2 });
+
+    expect(res.body.quantity).toBe(3);
+  });
+});

@@ -25,3 +25,16 @@ exports.searchSweets = async (req, res) => {
   const sweets = await Sweet.find(query);
   res.json(sweets);
 };
+exports.updateSweet = async (req, res) => {
+  const sweet = await Sweet.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  );
+
+  res.json(sweet);
+};
+exports.deleteSweet = async (req, res) => {
+  await Sweet.findByIdAndDelete(req.params.id);
+  res.json({ message: "Sweet deleted" });
+};
