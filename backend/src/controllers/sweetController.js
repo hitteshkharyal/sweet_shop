@@ -9,3 +9,19 @@ exports.getSweets = async (req, res) => {
   const sweets = await Sweet.find();
   res.json(sweets);
 };
+exports.searchSweets = async (req, res) => {
+  const { name, category, minPrice, maxPrice } = req.query;
+
+  const query = {};
+
+  if (name) query.name = new RegExp(name, "i");
+  if (category) query.category = category;
+  if (minPrice || maxPrice) {
+    query.price = {};
+    if (minPrice) query.price.$gte = minPrice;
+    if (maxPrice) query.price.$lte = maxPrice;
+  }
+
+  const sweets = await Sweet.find(query);
+  res.json(sweets);
+};
