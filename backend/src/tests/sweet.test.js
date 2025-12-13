@@ -51,3 +51,13 @@ describe("Sweets - Create", () => {
     expect(res.body.name).toBe("Gulab Jamun");
   });
 });
+describe("Sweets - Search", () => {
+  it("should search sweets by name", async () => {
+    const res = await request(app)
+      .get("/api/sweets/search?name=Gulab")
+      .set("Authorization", `Bearer ${token}`);
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.length).toBeGreaterThan(0);
+  });
+});
