@@ -33,3 +33,34 @@ describe("Auth - Register", () => {
     expect(res.body.message).toBe("User registered successfully");
   });
 });
+describe("Auth - Login", () => {
+  it("should login an existing user and return token", async () => {
+    // first register user
+    await request(app).post("/api/auth/register").send({
+      name: "Login User",
+      email: "login@test.com",
+      password: "password123"
+    });
+
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({
+        email: "login@test.com",
+        password: "password123"
+      });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.body.token).toBeDefined();
+  });
+
+  it("should fail for wrong password", async () => {
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({
+        email: "login@test.com",
+        password: "wrongpassword"
+      });
+
+    expect(res.statusCode).toBe(401);
+  });
+});
