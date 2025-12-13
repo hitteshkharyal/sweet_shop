@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { login } from "../api/auth";
-import { auth } from "../store/authStore";
 import {
   Box,
   Button,
@@ -12,18 +11,25 @@ import {
 
 export default function Login() {
   const [role, setRole] = useState("user");
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const submit = async () => {
     try {
-      const res = await login(form);
-      auth.login(res.data.token, res.data.role);
+      const res = await login({
+        email,
+        password,
+        role
+      });
+
+      localStorage.setItem("token", res.data.token);
+      localStorage.setItem("role", res.data.role);
 
       window.location.href =
         res.data.role === "admin" ? "/admin" : "/user";
-    } catch {
-      setError("Invalid email or password");
+    } catch (err) {
+      setError("Invalid email, password or role");
     }
   };
 
@@ -35,8 +41,8 @@ export default function Login() {
 
       <ToggleButtonGroup
         fullWidth
-        value={role}
         exclusive
+        value={role}
         onChange={(_, v) => v && setRole(v)}
         sx={{ mb: 2 }}
       >
@@ -48,19 +54,31 @@ export default function Login() {
         fullWidth
         label="Email"
         margin="normal"
-        onChange={e => setForm({ ...form, email: e.target.value })}
+        value={email}
+        onChange={e => setEmail(e.target.value)}
       />
+
       <TextField
         fullWidth
         label="Password"
         type="password"
         margin="normal"
-        onChange={e => setForm({ ...form, password: e.target.value })}
+        value={password}
+        onChange={e => setPassword(e.target.value)}
       />
 
-      {error && <Typography color="error">{error}</Typography>}
+      {error && (
+        <Typography color="error" sx={{ mt: 1 }}>
+          {error}
+        </Typography>
+      )}
 
-      <Button fullWidth variant="contained" sx={{ mt: 2 }} onClick={submit}>
+      <Button
+        fullWidth
+        variant="contained"
+        sx={{ mt: 2 }}
+        onClick={submit}
+      >
         Login
       </Button>
     </Box>

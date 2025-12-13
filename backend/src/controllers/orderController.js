@@ -1,6 +1,10 @@
 const Order = require("../models/Order");
 
 exports.createOrder = async (req, res) => {
+  if (!req.user || !req.user.id) {
+    return res.status(401).json({ message: "Unauthorized user" });
+  }
+
   const { items, totalAmount } = req.body;
 
   const order = await Order.create({

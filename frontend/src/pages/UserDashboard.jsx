@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import {
-  getSweets,
-  purchaseSweet
-} from "../api/sweets";
+  Box,
+  Typography,
+  Grid,
+  Button
+} from "@mui/material";
 
 import SweetCard from "../components/SweetCard";
 import SearchBar from "../components/SearchBar";
@@ -14,31 +16,23 @@ import Toast from "../components/Toast";
 
 import useDebounce from "../hooks/useDebounce";
 
-import {
-  Grid,
-  Box,
-  Typography,
-  Button
-} from "@mui/material";
+import { getSweets, purchaseSweet } from "../api/sweets";
+import { createOrder } from "../api/orders";
 
 export default function UserDashboard() {
   const [sweets, setSweets] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // Search & filter
   const [search, setSearch] = useState("");
   const debouncedSearch = useDebounce(search);
   const [category, setCategory] = useState("ALL");
 
-  // Cart
   const [cart, setCart] = useState([]);
   const [cartOpen, setCartOpen] = useState(false);
 
-  // Receipt
   const [receipt, setReceipt] = useState(null);
   const [receiptOpen, setReceiptOpen] = useState(false);
 
-  // Toast
   const [toast, setToast] = useState({
     open: false,
     message: "",
@@ -56,12 +50,8 @@ export default function UserDashboard() {
     loadSweets();
   }, []);
 
-  // Unique categories
-  const categories = [
-    ...new Set(sweets.map(s => s.category))
-  ];
+  const categories = ["ALL", ...new Set(sweets.map(s => s.category))];
 
-  // Filtered sweets
   const filteredSweets = sweets.filter(s => {
     const matchSearch = s.name
       .toLowerCase()
@@ -73,7 +63,6 @@ export default function UserDashboard() {
     return matchSearch && matchCategory;
   });
 
-  // Add to cart
   const addToCart = sweet => {
     setCart(prev => {
       const found = prev.find(i => i._id === sweet._id);
@@ -94,12 +83,10 @@ export default function UserDashboard() {
     });
   };
 
-  // Remove from cart
   const removeFromCart = id => {
     setCart(cart.filter(i => i._id !== id));
   };
 
-  // Dummy payment
   const handlePayment = async () => {
     try {
       setLoading(true);
@@ -113,8 +100,18 @@ export default function UserDashboard() {
         0
       );
 
+      await createOrder({
+        items: cart.map(i => ({
+          sweetId: i._id,
+          name: i.name,
+          qty: i.qty,
+          price: i.price
+        })),
+        totalAmount: total
+      });
+
       setReceipt({
-        user: localStorage.getItem("email") || "User",
+        user: localStorage.getItem("email"),
         items: cart,
         total,
         date: new Date().toLocaleString()
@@ -131,7 +128,8 @@ export default function UserDashboard() {
         message: "Payment successful",
         type: "success"
       });
-    } catch {
+    } catch (err) {
+      console.error(err);
       setToast({
         open: true,
         message: "Payment failed",
@@ -140,36 +138,27 @@ export default function UserDashboard() {
     } finally {
       setLoading(false);
     }
-    await createOrder({
-  items: cart.map(i => ({
-    sweetId: i._id,
-    name: i.name,
-    qty: i.qty,
-    price: i.price
-  })),
-  totalAmount: total
-});
-
   };
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4" mb={8}>
-            
+      <Typography variant="h4" mb={10}>
+        
       </Typography>
 
-      {/* Search & Filter */}
       <Grid container spacing={2} mb={2}>
         <Grid item xs={12} md={6}>
           <SearchBar value={search} onChange={setSearch} />
         </Grid>
+
         <Grid item xs={12} md={4}>
           <CategoryFilter
-            categories={categories}
+            categories={categories.slice(1)}
             value={category}
             onChange={setCategory}
           />
         </Grid>
+
         <Grid item xs={12} md={2}>
           <Button
             fullWidth
@@ -181,10 +170,8 @@ export default function UserDashboard() {
         </Grid>
       </Grid>
 
-      {/* Loader */}
       {loading && <Loader />}
 
-      {/* Sweet Cards */}
       <Grid container spacing={2}>
         {filteredSweets.map(s => (
           <Grid item xs={12} md={4} key={s._id}>
@@ -196,7 +183,6 @@ export default function UserDashboard() {
         ))}
       </Grid>
 
-      {/* Cart */}
       <CartDrawer
         open={cartOpen}
         cart={cart}
@@ -205,14 +191,12 @@ export default function UserDashboard() {
         onPay={handlePayment}
       />
 
-      {/* Receipt */}
       <ReceiptDialog
         open={receiptOpen}
         receipt={receipt}
         onClose={() => setReceiptOpen(false)}
       />
 
-      {/* Toast */}
       <Toast
         open={toast.open}
         message={toast.message}

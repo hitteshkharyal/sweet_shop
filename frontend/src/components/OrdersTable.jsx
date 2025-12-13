@@ -8,7 +8,7 @@ import {
   Typography
 } from "@mui/material";
 
-export default function OrdersTable({ orders }) {
+export default function OrdersTable({ orders, showUser = false }) {
   if (!orders.length) {
     return (
       <Typography color="text.secondary">
@@ -22,6 +22,7 @@ export default function OrdersTable({ orders }) {
       <Table>
         <TableHead>
           <TableRow>
+            {showUser && <TableCell>User</TableCell>}
             <TableCell>Date</TableCell>
             <TableCell>Items</TableCell>
             <TableCell>Total Amount</TableCell>
@@ -31,8 +32,14 @@ export default function OrdersTable({ orders }) {
         <TableBody>
           {orders.map(order => (
             <TableRow key={order._id}>
+              {showUser && (
+                <TableCell>
+                  {order.userId?.email}
+                </TableCell>
+              )}
+
               <TableCell>
-                {new Date(order.createdAt).toLocaleDateString()}
+                {new Date(order.createdAt).toLocaleString()}
               </TableCell>
 
               <TableCell>
@@ -43,7 +50,9 @@ export default function OrdersTable({ orders }) {
                 ))}
               </TableCell>
 
-              <TableCell>₹{order.totalAmount}</TableCell>
+              <TableCell>
+                ₹{order.totalAmount}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

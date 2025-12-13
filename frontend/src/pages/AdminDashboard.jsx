@@ -1,9 +1,15 @@
 import { useEffect, useState } from "react";
-import { getSweets } from "../api/sweets";
+import {
+  Box,
+  Typography,
+  Button
+} from "@mui/material";
+
 import SweetTable from "../components/SweetTable";
 import SweetForm from "../components/SweetForm";
 import RestockDialog from "../components/RestockDialog";
-import { Box, Button, Typography } from "@mui/material";
+
+import { getSweets } from "../api/sweets";
 
 export default function AdminDashboard() {
   const [sweets, setSweets] = useState([]);
@@ -11,22 +17,24 @@ export default function AdminDashboard() {
   const [openRestock, setOpenRestock] = useState(false);
   const [selectedSweet, setSelectedSweet] = useState(null);
 
-  const load = async () => {
+  const loadSweets = async () => {
     const res = await getSweets();
     setSweets(res.data);
   };
 
   useEffect(() => {
-    load();
+    loadSweets();
   }, []);
 
   return (
     <Box sx={{ p: 3 }}>
-      <Typography variant="h4">Admin Dashboard</Typography>
+      <Typography variant="h4" mb={2}>
+        Admin Dashboard
+      </Typography>
 
       <Button
-        sx={{ my: 2 }}
         variant="contained"
+        sx={{ mb: 2 }}
         onClick={() => {
           setSelectedSweet(null);
           setOpenForm(true);
@@ -45,14 +53,14 @@ export default function AdminDashboard() {
           setSelectedSweet(sweet);
           setOpenRestock(true);
         }}
-        onRefresh={load}
+        onRefresh={loadSweets}
       />
 
       {openForm && (
         <SweetForm
           sweet={selectedSweet}
           onClose={() => setOpenForm(false)}
-          onSuccess={load}
+          onSuccess={loadSweets}
         />
       )}
 
@@ -60,7 +68,7 @@ export default function AdminDashboard() {
         <RestockDialog
           sweet={selectedSweet}
           onClose={() => setOpenRestock(false)}
-          onSuccess={load}
+          onSuccess={loadSweets}
         />
       )}
     </Box>
