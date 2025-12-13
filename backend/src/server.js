@@ -15,5 +15,8 @@ app.use("/api/sweets", sweetRoutes);
 app.get("/", (req, res) => {
   res.send("Sweet Shop API is running...");
 });
+const orderRoutes = require("./routes/orderRoutes");
+
+app.use("/api/orders", orderRoutes);
 
 module.exports = app;
