@@ -112,9 +112,7 @@ export default function Login() {
               Sign in to continue
             </Typography>
             <Typography variant="body2" color="text.secondary" textAlign="center">
-              adminlogin- admin@sweetshop.com | password- admin123
-              <br />
-              userlogin-hiteshkharyal@gmail.com | password- abc123
+            admin@sweetshop.com | admin123
             </Typography>
 
             <ToggleButtonGroup
