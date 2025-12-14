@@ -1,484 +1,211 @@
-🍬 Sweet Shop Management System (MERN)
+🍬 Sweet Shop Management System (MERN) 
+frontend live link- https://sweetsshop-hitesh.netlify.app/
+backend live link - https://sweet-shop-backend-0at8.onrender.com/
+A full-stack Sweet Shop Management System built using the MERN stack (MongoDB, Express, React, Node.js) following Test-Driven Development (TDD) principles.
+The application supports user & admin roles, JWT-based authentication, inventory management, orders, and a modern responsive UI.
 
-A full-stack Sweet Shop Management System built using the MERN stack, developed sprint-by-sprint using Test-Driven Development (TDD) principles.
-The application supports role-based access (Admin & User), inventory management, orders, and dashboard views, with a clean REST API and modern frontend.
+🔗 Public Git Repository
 
-🚀 Tech Stack
+👉 GitHub Repository:
+https://github.com/hitteshkharyal/sweet_shop
+
+📌 Project Overview
+
+The Sweet Shop Management System allows:
+
+👤 Users
+
+Register & login securely
+
+View available sweets
+
+Search & filter sweets
+
+Add items to cart
+
+Place orders (dummy payment)
+
+View their past orders
+
+🛠 Admin
+
+Login with admin credentials
+
+Add, update, delete sweets
+
+Restock inventory
+
+View all user orders
+
+Monitor stock & sales data (foundation for analytics)
+
+🧱 Tech Stack
+Backend
+
+Node.js
+
+Express.js
+
+MongoDB Atlas
+
+Mongoose
+
+JWT Authentication
+
+Jest + Supertest (TDD)
+
 Frontend
 
 React (Vite)
 
-Material UI
+Material UI (MUI)
+
+React Router
 
 Axios
-<<<<<<< HEAD
-
-React Router
-
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB (Mongoose)
-
-JWT Authentication
-
-Testing
-
-Jest
-
-Supertest
 
 Deployment
 
-Frontend: Vercel
-
 Backend: Render
+
+Frontend: Netlify
 
 Database: MongoDB Atlas
 
-🧱 Project Structure (Monorepo)
-sweet_shop_m/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   ├── models/
-│   │   ├── middleware/
-│   │   └── index.js
-│   ├── tests/
-│   └── package.json
-│
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── components/
-│   │   ├── api/
-│   │   └── App.jsx
-│   └── package.json
-│
-└── README.md
+🚀 Live Application (Optional – Brownie Points)
 
-🧪 Development Approach (TDD)
+🌐 Frontend (Netlify):
+👉 Add your Netlify URL here
 
-Backend features were implemented using Red → Green → Refactor
+🌐 Backend API (Render):
+👉 Add your Render backend URL here
 
-Each API endpoint was first validated via tests
+🧪 Test Report
 
-Frontend was developed after API stability
+The backend was developed using Test-Driven Development.
 
-Frequent commits after each sprint milestone
+✔ Test Coverage Includes:
 
-🏃‍♂️ Sprints Overview
-🟢 Sprint 0 — Project Setup & Architecture
+Authentication (register & login)
 
-Monorepo setup (frontend + backend)
+JWT protection middleware
 
-Express server initialization
+Sweet CRUD operations
 
-MongoDB connection
+Inventory purchase & restock
 
-Environment configuration
+Order creation & retrieval
 
-Sample API & test verification
-
-🟢 Sprint 1 — Authentication (TDD)
-
-User registration API
-
-User login API
-
-Password hashing (bcrypt)
-
-JWT token generation
-
-Auth tests using Jest + Supertest
-
-🟢 Sprint 2 — Authorization & Inventory (TDD)
-
-JWT auth middleware
-
-Role-based access (Admin/User)
-
-Sweet CRUD APIs
-
-Search sweets (name, category, price)
-
-Inventory purchase & restock logic
-
-Protected route tests
-
-🟢 Sprint 3 — Frontend Auth & Core UI
-
-Login & Register pages
-
-Role selection (Admin/User)
-
-Protected routing
-
-User & Admin dashboards
-
-Axios API integration
-
-🟢 Sprint 4 — Cart, Orders & Payments (Dummy)
-
-Cart functionality
-
-Dummy payment flow
-
-Order creation after payment
-
-Quantity reduction after purchase
-
-Toasts & loaders
-
-Search & category filters
-
-🟢 Sprint 5 — Dashboards & Admin Features
-
-Admin sweets management UI
-
-Restock functionality
-
-Order listing for admin
-
-Inventory status handling
-
-🟢 Sprint 6 — Profiles & Orders
-
-User Profile page (Order history)
-
-Admin view for all orders
-
-Order table for analytics readiness
-
-Stable JWT-based auth using localStorage
-
-Clean role-based navigation
-
-🟢 Sprint 7 — Deployment
-
-Backend deployed on Render
-
-Frontend deployed on Vercel
-
-MongoDB Atlas integration
-
-CORS configuration
-
-Production-ready environment variables
-
-🔐 Authentication Flow
-
-JWT stored in localStorage
-
-Token sent via Authorization: Bearer <token>
-
-Backend middleware validates token
-
-Role-based route protection
-
-▶️ Running Locally
-Backend
+▶ Run Tests
 cd backend
-npm install
-npm run dev
-
-
-Create .env inside backend:
-
-PORT=4000
-MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_secret
-
-Frontend
-cd frontend
-npm install
-npm run dev
-
-🌍 Deployment
-
-Frontend (Vercel)
-
-Backend (Render)
-
-Database (MongoDB Atlas)
-
-Production URLs are configured directly in the frontend API client.
-
-🧠 My AI Usage
-
-AI tools were used responsibly throughout development.
-
-Tools Used
-
-ChatGPT
-
-How AI Helped
-
-Sprint planning & breakdown
-
-API design suggestions
-
-Test case generation ideas
-
-Debugging guidance
-
-README structuring
-
-Reflection
-
-AI significantly improved productivity and clarity, especially during sprint planning and debugging, while all final logic and decisions were implemented and validated manually.
-
-📌 Key Highlights
-
-Full MERN stack
-
-Role-based access
-
-Inventory & orders
-
-TDD-driven backend
-
-Clean REST APIs
-
-Deployed & production-ready
-
-=======
-
-React Router
-
-Backend
-
-Node.js
-
-Express.js
-
-MongoDB (Mongoose)
-
-JWT Authentication
-
-Testing
-
-Jest
-
-Supertest
-
-Deployment
-
-Frontend: Vercel
-
-Backend: Render
-
-Database: MongoDB Atlas
-
-🧱 Project Structure (Monorepo)
-sweet_shop_m/
-├── backend/
-│   ├── src/
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   ├── models/
-│   │   ├── middleware/
-│   │   └── index.js
-│   ├── tests/
-│   └── package.json
-│
-├── frontend/
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── components/
-│   │   ├── api/
-│   │   └── App.jsx
-│   └── package.json
-│
-└── README.md
-
-🧪 Development Approach (TDD)
-
-Backend features were implemented using Red → Green → Refactor
-
-Each API endpoint was first validated via tests
-
-Frontend was developed after API stability
-
-Frequent commits after each sprint milestone
-
-🏃‍♂️ Sprints Overview
-🟢 Sprint 0 — Project Setup & Architecture
-
-Monorepo setup (frontend + backend)
-
-Express server initialization
-
-MongoDB connection
-
-Environment configuration
-
-Sample API & test verification
-
-🟢 Sprint 1 — Authentication (TDD)
-
-User registration API
-
-User login API
-
-Password hashing (bcrypt)
-
-JWT token generation
-
-Auth tests using Jest + Supertest
-
-🟢 Sprint 2 — Authorization & Inventory (TDD)
-
-JWT auth middleware
-
-Role-based access (Admin/User)
-
-Sweet CRUD APIs
-
-Search sweets (name, category, price)
-
-Inventory purchase & restock logic
-
-Protected route tests
-
-🟢 Sprint 3 — Frontend Auth & Core UI
-
-Login & Register pages
-
-Role selection (Admin/User)
-
-Protected routing
-
-User & Admin dashboards
-
-Axios API integration
-
-🟢 Sprint 4 — Cart, Orders & Payments (Dummy)
-
-Cart functionality
-
-Dummy payment flow
-
-Order creation after payment
-
-Quantity reduction after purchase
-
-Toasts & loaders
-
-Search & category filters
-
-🟢 Sprint 5 — Dashboards & Admin Features
-
-Admin sweets management UI
-
-Restock functionality
-
-Order listing for admin
-
-Inventory status handling
-
-🟢 Sprint 6 — Profiles & Orders
-
-User Profile page (Order history)
-
-Admin view for all orders
-
-Order table for analytics readiness
-
-Stable JWT-based auth using localStorage
-
-Clean role-based navigation
-
-🟢 Sprint 7 — Deployment
-
-Backend deployed on Render
-
-Frontend deployed on Vercel
-
-MongoDB Atlas integration
-
-CORS configuration
-
-Production-ready environment variables
-
-🔐 Authentication Flow
-
-JWT stored in localStorage
-
-Token sent via Authorization: Bearer <token>
-
-Backend middleware validates token
-
-Role-based route protection
-
-▶️ Running Locally
-Backend
+npm test
+
+✅ Sample Test Output
+Test Suites: 3 passed
+Tests:       10 passed
+Snapshots:   0
+Time:        ~2s
+
+🛠 Local Setup Instructions
+1️⃣ Clone Repository
+git clone https://github.com/hitteshkharyal/sweet_shop.git
+cd sweet_shop
+
+⚙ Backend Setup
+📂 Navigate to backend
 cd backend
+
+📦 Install dependencies
 npm install
-npm run dev
 
-
-Create .env inside backend:
-
+🔐 Create .env file
 PORT=4000
-MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_secret
+MONGO_URI=your_mongodb_atlas_uri
+JWT_SECRET=your_secret_key
 
-Frontend
-cd frontend
-npm install
+▶ Run backend
 npm run dev
 
-🌍 Deployment
 
-Frontend (Vercel)
+Backend runs at:
+👉 http://localhost:4000
 
-Backend (Render)
+🎨 Frontend Setup
+📂 Navigate to frontend
+cd frontend
 
-Database (MongoDB Atlas)
+📦 Install dependencies
+npm install
 
-Production URLs are configured directly in the frontend API client.
+▶ Run frontend
+npm run dev
 
-🧠 My AI Usage
 
-AI tools were used responsibly throughout development.
+Frontend runs at:
+👉 http://localhost:5173
 
-Tools Used
+🖼 Screenshots
 
-ChatGPT
+inside the screenshots directory
+from landig to user and admin dashboard 
 
-How AI Helped
+Suggested screenshots:
 
-Sprint planning & breakdown
+Landing Page
 
-API design suggestions
+Login / Register
 
-Test case generation ideas
+User Dashboard
 
-Debugging guidance
+Admin Dashboard
 
-README structuring
+Orders Page
 
-Reflection
+Sweets Management (Admin)
 
-AI significantly improved productivity and clarity, especially during sprint planning and debugging, while all final logic and decisions were implemented and validated manually.
+🤖 My AI Usage 
+AI Tools Used
 
-📌 Key Highlights
+ChatGPT (OpenAI)
 
-Full MERN stack
+How AI Was Used
 
-Role-based access
+Designing API structure & REST endpoints
 
-Inventory & orders
+Writing and refining Jest test cases (TDD)
 
-TDD-driven backend
+Debugging backend & frontend integration issues
 
-Clean REST APIs
+Improving UI/UX design ideas
 
-Deployed & production-ready
->>>>>>> 11a4f17 (fix: correct model file casing for production environment)
+Assisting with deployment (Render, Netlify)
 
+Helping structure this README
+
+
+📦 Sprint-Based Development Summary
+Sprint	Focus
+Sprint 0	Project setup, repo structure, tooling
+Sprint 1	Auth APIs (Register/Login) with TDD
+Sprint 2	JWT Middleware & Sweets CRUD
+Sprint 3	Frontend Auth & Dashboards
+Sprint 4	Cart, Orders, Inventory logic
+Sprint 5	UI enhancements, validations
+Sprint 6	User/Admin profiles & orders
+Sprint 7	Deployment (Atlas, Render, Netlify)
+
+🏁 Conclusion
+
+This project demonstrates:
+
+Full-stack MERN development
+
+Clean architecture & modular code
+
+Proper use of TDD
+
+Secure authentication
+
+Real-world deployment workflow
+
+Responsible AI usage
