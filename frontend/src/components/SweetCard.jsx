@@ -31,7 +31,7 @@ const getSweetImage = (sweet) => {
     }
   }
   
-  return "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=https://images.unsplash.com/photo-1543773495-2cd9248a5bda?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D400&q=80";
+  return "https://images.unsplash.com/photo-1543773495-2cd9248a5bda?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
 };
 
 export default function SweetCard({ sweet, onBuy }) {
