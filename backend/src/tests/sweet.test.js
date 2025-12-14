@@ -7,22 +7,43 @@ const app = require("../server");
 const User = require("../models/User");
 
 let token;
+let adminToken;
 
 beforeAll(async () => {
   await mongoose.connect(process.env.MONGO_URI);
 
+  // Normal user
   await request(app).post("/api/auth/register").send({
     name: "Test User",
     email: "user@test.com",
     password: "password123"
   });
 
-  const res = await request(app).post("/api/auth/login").send({
+  const userLogin = await request(app).post("/api/auth/login").send({
     email: "user@test.com",
     password: "password123"
   });
 
-  token = res.body.token;
+  token = userLogin.body.token;
+
+  // Admin user
+  await request(app).post("/api/auth/register").send({
+    name: "Admin",
+    email: "admin@test.com",
+    password: "admin123"
+  });
+
+  await User.findOneAndUpdate(
+    { email: "admin@test.com" },
+    { role: "admin" }
+  );
+
+  const adminLogin = await request(app).post("/api/auth/login").send({
+    email: "admin@test.com",
+    password: "admin123"
+  });
+
+  adminToken = adminLogin.body.token;
 });
 
 afterAll(async () => {
@@ -35,6 +56,7 @@ describe("Sweets - Protected Routes", () => {
     expect(res.statusCode).toBe(401);
   });
 });
+
 describe("Sweets - Create", () => {
   it("should create a sweet", async () => {
     const res = await request(app)
@@ -51,6 +73,7 @@ describe("Sweets - Create", () => {
     expect(res.body.name).toBe("Gulab Jamun");
   });
 });
+
 describe("Sweets - Search", () => {
   it("should search sweets by name", async () => {
     const res = await request(app)
@@ -61,6 +84,7 @@ describe("Sweets - Search", () => {
     expect(res.body.length).toBeGreaterThan(0);
   });
 });
+
 describe("Sweets - Update", () => {
   it("should update sweet details", async () => {
     const sweet = await request(app)
@@ -82,27 +106,6 @@ describe("Sweets - Update", () => {
     expect(res.body.price).toBe(8);
   });
 });
-let adminToken;
-
-beforeAll(async () => {
-  await request(app).post("/api/auth/register").send({
-    name: "Admin",
-    email: "admin@test.com",
-    password: "admin123"
-  });
-
-  await User.findOneAndUpdate(
-    { email: "admin@test.com" },
-    { role: "admin" }
-  );
-
-  const res = await request(app).post("/api/auth/login").send({
-    email: "admin@test.com",
-    password: "admin123"
-  });
-
-  adminToken = res.body.token;
-});
 
 describe("Sweets - Delete (Admin)", () => {
   it("should delete sweet if admin", async () => {
@@ -123,7 +126,6 @@ describe("Sweets - Delete (Admin)", () => {
     expect(res.statusCode).toBe(200);
   });
 });
-
 
 describe("Inventory - Purchase", () => {
   it("should reduce quantity when purchased", async () => {

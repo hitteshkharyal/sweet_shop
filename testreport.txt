@@ -1,0 +1,109 @@
+ FAIL  src/tests/sweet.test.js                         
+  ● Console
+
+    console.log
+      REGISTER BODY: { name: 'Test User', email: 'user@test.com', password: 'password123' }
+
+      at log (src/controllers/authController.js:8:13)  
+
+    console.log
+      REGISTER BODY: { name: 'Admin', email: 'admin@test.com', password: 'admin123' }
+
+      at log (src/controllers/authController.js:8:13)  
+
+  ● Sweets - Create › should create a sweet
+                                                       
+    expect(received).toBe(expected) // Object.is equality                                                     
+                                                       
+    Expected: 201                                      
+    Received: 401
+
+      70 |       });
+      71 |
+    > 72 |     expect(res.statusCode).toBe(201);       
+         |                            ^
+      73 |     expect(res.body.name).toBe("Gulab Jamun");
+      74 |   });
+      75 | });
+
+      at Object.toBe (src/tests/sweet.test.js:72:28)   
+
+  ● Sweets - Search › should search sweets by name     
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 401
+
+      81 |       .set("Authorization", `Bearer ${token}`);
+      82 |
+    > 83 |     expect(res.statusCode).toBe(200);       
+         |                            ^
+      84 |     expect(res.body.length).toBeGreaterThan(0);
+      85 |   });
+      86 | });
+
+      at Object.toBe (src/tests/sweet.test.js:83:28)   
+
+  ● Sweets - Update › should update sweet details      
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 401
+
+      103 |       .send({ price: 8 });
+      104 |
+    > 105 |     expect(res.statusCode).toBe(200);      
+          |                            ^
+      106 |     expect(res.body.price).toBe(8);        
+      107 |   });
+      108 | });
+
+      at Object.toBe (src/tests/sweet.test.js:105:28)  
+
+  ● Sweets - Delete (Admin) › should delete sweet if admin
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 200
+    Received: 401
+
+      124 |       .set("Authorization", `Bearer ${adminToken}`);
+      125 |
+    > 126 |     expect(res.statusCode).toBe(200);      
+          |                            ^
+      127 |   });
+      128 | });
+      129 |
+
+      at Object.toBe (src/tests/sweet.test.js:126:28)  
+
+  ● Inventory - Purchase › should reduce quantity when purchased
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 3
+    Received: undefined
+
+      145 |       .send({ qty: 2 });
+      146 |
+    > 147 |     expect(res.body.quantity).toBe(3);     
+          |                               ^
+      148 |   });
+      149 | });
+      150 |
+
+      at Object.toBe (src/tests/sweet.test.js:147:31)  
+
+Test Suites: 1 failed, 2 passed, 3 total
+Tests:       5 failed, 3 passed, 8 total
+Snapshots:   0 total
+Time:        3.497 s
+Ran all test suites.
+PS E:\sweet_shop_m\backend> 
+
+
+new features are added and backend is adjusted too 
+backend that is test with .env.test later somhow changed a little due to adding new features in frontend so test cases are failed some some mismached message 
+app is running safe in production and all frondend side testing is also done
