@@ -13,7 +13,6 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import SweetTable from "../components/SweetTable";
 import SweetForm from "../components/SweetForm";
 import RestockDialog from "../components/RestockDialog";
-import AnalyticsCards from "../components/AnalyticsCards";
 
 import { getSweets } from "../api/sweets";
 
@@ -33,10 +32,10 @@ export default function AdminDashboard() {
   }, []);
 
   // Calculate analytics
-  const totalOrders = 0; // You can fetch this from orders API
-  const totalRevenue = sweets.reduce((sum, s) => sum + (s.price * (s.initialStock || s.quantity)), 0);
-  const topSelling = []; // You can calculate this from orders
-  const outOfStock = sweets.filter(s => s.quantity === 0);
+  const totalSweetsWorth = sweets.reduce(
+    (sum, s) => sum + (s.price || 0) * (s.quantity ?? s.initialStock ?? 0),
+    0
+  );
 
   return (
     <Box
@@ -70,13 +69,8 @@ export default function AdminDashboard() {
           </Stack>
         </Box>
 
-        {/* Analytics Cards */}
-        <AnalyticsCards
-          totalOrders={totalOrders}
-          totalRevenue={totalRevenue}
-          topSelling={topSelling}
-          outOfStock={outOfStock}
-        />
+        {/* You previously had AnalyticsCards here; removed total orders, top selling and out of stock cards.
+            Showing total sweets worth variable is calculated (totalSweetsWorth) and can be used where needed. */}
 
         {/* Actions and Table */}
         <Paper
